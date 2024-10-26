@@ -1,17 +1,51 @@
-<% if result.present? && result.key?(:deepL) && result[:deepL].present? %>
-  <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
-    <p class="font-bold text-lg">Translation (DeepL):</p>
-    <p class="mt-2 text-gray-800"><%= result[:deepL] %></p>
+<% if result.present? %>
+  <% if result.key?(:audio) && result[:audio].present? %>
+    <div class="flex items-center"> 
+      <audio id="audio-player" preload="auto">
+        <source src="data:audio/mp3;base64,<%= Base64.encode64(result[:audio]) %>" type="audio/mpeg">
+      </audio>
 
-    <% if result.key?(:yandex) && result[:yandex].present? %>
-      <p class="font-bold text-lg mt-4">Yandex dictionary:</p>
-      <p class="mt-2 text-gray-800"><%= result[:yandex] %></p>
-    <% end %>
-  </div>
-<% elsif result.present? && result.key?(:yandex) && result[:yandex].present? %>
+  
+      <button id="play-button" class="ml-2 p-2 border rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none">
+        <span class="text-gray-800">&#128362;</span> 
+      </button>
+      - <%= params[:input_text] %>
+    </div>
+
+    <script>
+      document.getElementById('play-button').addEventListener('click', function() {
+        var audio = document.getElementById('audio-player');
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      });
+    </script>
+  <% end %>
+
+  <% if result.key?(:deepL) && result[:deepL].present? %>
+    <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
+      <p class="font-bold text-lg">Translation (DeepL):</p>
+      <p class="mt-2 text-gray-800" style="overflow-wrap: break-word;"><%= result[:deepL] %></p>
+    </div>
+  <% end %>
+
+  <% if result.key?(:yandex) && result[:yandex].present? %>
+    <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
+      <p class="font-bold text-lg">Yandex dictionary:</p>
+      <p class="mt-2 text-gray-800" style="overflow-wrap: break-word;"><%= result[:yandex] %></p>
+    </div>
+  <% end %>
+
+  <% if result[:deepL].blank? && result[:yandex].blank? %>
+    <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
+      <p class="text-gray-800">No translations found.</p>
+    </div>
+  <% end %>
+<% else %>
   <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
-    <p class="font-bold text-lg">Yandex dictionary:</p>
-    <p class="mt-2 text-gray-800"><%= result[:yandex] %></p>
+    <p class="text-gray-800">No results available.</p>
   </div>
 <% end %>
 
