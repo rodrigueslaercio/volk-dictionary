@@ -11,4 +11,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-end
+
+  root "api#index"
+  post "api", to: "api#create", as: :api
+ end

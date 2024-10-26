@@ -43,6 +43,12 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # HTTParty
+  gem "httparty"
+
+  # dotenv
+  gem "dotenv-rails"
 end
 
 group :development do

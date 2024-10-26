@@ -1,0 +1,8 @@
+<%= form_with url: api_path, method: :post, data: { turbo_frame: 'result' } do |form| %>
+  <%= form.text_field :input_text, placeholder: "Enter your text" %>
+  <%= form.submit "Submit" %>
+<% end %>
+
+<div id="result">
+  <%= render partial: "result", locals: { result: nil } %>
+</div>
