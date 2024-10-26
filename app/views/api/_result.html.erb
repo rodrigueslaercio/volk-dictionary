@@ -27,15 +27,23 @@
   <% if result.key?(:deepL) && result[:deepL].present? %>
     <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
       <p class="font-bold text-lg">Translation (DeepL):</p>
-      <p class="mt-2 text-gray-800" style="overflow-wrap: break-word;"><%= result[:deepL] %></p>
+      <p class="mt-2 text-gray-800" style="overflow-wrap: break-word;"><%= result[:deepL]["translations"][0]["text"] %></p>
     </div>
   <% end %>
 
   <% if result.key?(:yandex) && result[:yandex].present? %>
-    <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
+    <% if result[:yandex]["def"].present? %>
+      <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
       <p class="font-bold text-lg">Yandex dictionary:</p>
-      <p class="mt-2 text-gray-800" style="overflow-wrap: break-word;"><%= result[:yandex] %></p>
-    </div>
+      <p class="mt-2 text-gray-800" style="overflow-wrap: break-word;"><strong><%= result[:yandex]["def"][0]["text"] %></strong> (<%= result[:yandex]["def"][0]["pos"] %>)</p>
+      <strong>Translation:</strong> </br>
+      <%= result[:yandex]["def"][0]["tr"][0]["text"] %>
+      </br><strong>Synonyms:</strong> </br>
+      <% result[:yandex]["def"][0]["tr"][0]["syn"].each do |syn|  %>
+        <%= syn["text"] %> </br> 
+      <% end %>
+      </div>
+    <% end %>
   <% end %>
 
   <% if result[:deepL].blank? && result[:yandex].blank? %>

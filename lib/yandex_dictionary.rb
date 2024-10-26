@@ -6,7 +6,7 @@ class YandexDictionary
     key = ENV["YANDEX"]
     encoded_text = CGI.escape(text)
 
-      response = HTTParty.get("https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=#{key}&lang=ru-en&text=#{encoded_text}")
+    response = HTTParty.get("https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=#{key}&lang=ru-en&text=#{encoded_text}")
     JSON.parse(response.body)
   end
 end
