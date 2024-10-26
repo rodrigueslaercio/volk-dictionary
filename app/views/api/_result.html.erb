@@ -1,10 +1,17 @@
-<% if result.present? && result.key?(:deepL) && result[:deepL].present? && result.key?(:yandex) && result[:yandex].present? %>
-  <p> Translation (DeepL) <p>
-  <%= result[:deepL] %>
+<% if result.present? && result.key?(:deepL) && result[:deepL].present? %>
+  <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
+    <p class="font-bold text-lg">Translation (DeepL):</p>
+    <p class="mt-2 text-gray-800"><%= result[:deepL] %></p>
 
-  <p>Yandex dictionary</p>
-  <%= result[:yandex] %>
-<% elsif result.present? && !result[:yandex].present? %>
-<p> Translation (DeepL) <p>
-  <%= result[:deepL] %>
+    <% if result.key?(:yandex) && result[:yandex].present? %>
+      <p class="font-bold text-lg mt-4">Yandex dictionary:</p>
+      <p class="mt-2 text-gray-800"><%= result[:yandex] %></p>
+    <% end %>
+  </div>
+<% elsif result.present? && result.key?(:yandex) && result[:yandex].present? %>
+  <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
+    <p class="font-bold text-lg">Yandex dictionary:</p>
+    <p class="mt-2 text-gray-800"><%= result[:yandex] %></p>
+  </div>
 <% end %>
+

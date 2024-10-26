@@ -1,8 +1,15 @@
-<%= form_with url: api_path, method: :post, data: { turbo_frame: 'result' } do |form| %>
-  <%= form.text_field :input_text, placeholder: "Enter your text" %>
-  <%= form.submit "Search" %>
-<% end %>
+<div class="flex flex-col items-center justify-center"> 
+  <%= form_with url: api_path, method: :post, data: { turbo_frame: "result_frame" } do |form| %>
+    <%= form.text_field :input_text, placeholder: "Enter your text", class: "mb-4 border rounded-md p-2 w-full max-w-xs" %>
 
-<div id="result">
-  <%= render partial: "result", locals: { result: nil } %>
+    <div class="flex items-center justify-center gap-4">
+      <button type="submit" class="relative inline-block h-full w-auto rounded border-2 border-black bg-white px-3 py-1 text-base font-bold text-black transition duration-100 hover:bg-yellow-400 hover:text-gray-900">Search</button>
+    </div>
+  <% end %>
+
+ <%= turbo_frame_tag "result_frame" do %>
+    <div id="result" class="mt-6 w-full max-w-xs">
+      <%= render partial: "result", locals: { result: nil } %>
+    </div>
+  <% end %>
 </div>

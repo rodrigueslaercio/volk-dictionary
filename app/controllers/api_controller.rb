@@ -1,6 +1,6 @@
-class ApiController < ApplicationController
-  require "httparty"
+require "httparty"
 
+class ApiController < ApplicationController 
   def index
   end
 
@@ -21,9 +21,9 @@ class ApiController < ApplicationController
   end
 
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.append("result", partial: "result", locals: { result: response })
-      end
+    format.turbo_stream {
+        render turbo_stream: turbo_stream.replace("result", partial: "result", locals: { result: response })
+    }
     end
   end
 end
