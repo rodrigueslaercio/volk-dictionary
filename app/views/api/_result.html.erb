@@ -1,4 +1,10 @@
-<% if result %>
+<% if result.present? && result.key?(:deepL) && result[:deepL].present? && result.key?(:yandex) && result[:yandex].present? %>
   <p> Translation (DeepL) <p>
-  <%= result["translations"][0]["text"] %> 
+  <%= result[:deepL] %>
+
+  <p>Yandex dictionary</p>
+  <%= result[:yandex] %>
+<% elsif result.present? && !result[:yandex].present? %>
+<p> Translation (DeepL) <p>
+  <%= result[:deepL] %>
 <% end %>

@@ -11,7 +11,7 @@ class DeepL
         "Content-Type" => "application/json"
       },
       body: {
-        text: [text],
+        text: [ text ],
         target_lang: "EN"
       }.to_json
     )
