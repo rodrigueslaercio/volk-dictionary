@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center justify-center"> 
+<div class="flex flex-col items-center justify-center">
   <%= form_with url: api_path, method: :post, data: { turbo_frame: "result_frame" } do |form| %>
     <%= form.text_field :input_text, placeholder: "Enter your text", class: "mb-4 border rounded-md p-2 w-full max-w-xs" %>
 

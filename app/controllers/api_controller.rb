@@ -8,7 +8,7 @@ class ApiController < ApplicationController
     deepl_response = DeepL.api(params[:input_text])
     audio_response = GoogleAudio.audio(params[:input_text])
     tatoeba_response = Tatoeba.api(params[:input_text])
-    
+
     if params[:input_text].to_s.split.size == 1
       yandex_response = YandexDictionary.api(params[:input_text])
 
