@@ -15,7 +15,9 @@ class DeepL
         target_lang: "EN"
       }.to_json
     )
-
-    JSON.parse(response.body)
+    
+    if response.success?
+      JSON.parse(response.body)
+    end
   end
 end
