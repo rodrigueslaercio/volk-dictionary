@@ -4,12 +4,41 @@
   <% if result.key?(:audio) && result[:audio].present? %>
     <div class="flex items-center">
       <audio id="audio-player" preload="auto">
-        <source src="data:audio/mp3;base64,<%= Base64.encode64(result[:audio]) %>" type="audio/mpeg">
+        <source
+          src="data:audio/mp3;base64,<%= Base64.encode64(result[:audio]) %>"
+          type="audio/mpeg"
+        >
       </audio>
-      <button id="play-button" class="ml-2 p-2 border rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none">
+      <button
+        id="play-button"
+        class="
+          ml-2 p-2 border rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none
+        "
+      >
         <span class="text-gray-800">&#128362;</span>
       </button>
-      - <%= params[:input_text] %>
+      -
+      <%= params[:input_text] %>
+      <div id="favorite_word">
+        <% if @favorite_word.present? && @favorite_word.persisted? %>
+          <span style="color: gold;">&#9733;</span>
+          <%= link_to raw("&#9733;"),
+          favorite_words_path(input_text: params[:input_text]),
+          data: {
+            turbo_method: :delete,
+          },
+          id: "star_link_#{params[:input_text]}" %>
+        <% else %>
+          <span style="color: gray;">&#9734;</span>
+          <%= link_to raw("&#9734;"),
+          favorite_words_path(input_text: params[:input_text]),
+          data: {
+            turbo_method: :post,
+          },
+          id: "star_link_#{params[:input_text]}" %>
+        <% end %>
+      </div>
+
     </div>
     <script>
       document.getElementById('play-button').addEventListener('click', function() {
@@ -39,17 +68,22 @@
       <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
         <p class="font-bold text-lg">Yandex dictionary</p>
         <p class="mt-2 text-gray-800" style="overflow-wrap: break-word;">
-          <strong><%= result[:yandex]["def"][0]["text"] %></strong> (<%= result[:yandex]["def"][0]["pos"] %>)
+          <strong><%= result[:yandex]["def"][0]["text"] %></strong>
+          (<%= result[:yandex]["def"][0]["pos"] %>)
         </p>
-        <strong>Translation</strong> <br>
+        <strong>Translation</strong>
+        <br>
         <%= result[:yandex]["def"][0]["tr"][0]["text"] %>
-        <br><strong>Synonyms</strong> <br>
+        <br><strong>Synonyms</strong>
+        <br>
         <% if result[:yandex]["def"][0]["tr"][0]["syn"].present? %>
           <% result[:yandex]["def"][0]["tr"][0]["syn"].each do |syn| %>
-            <%= syn["text"] %> <br>
+            <%= syn["text"] %>
+            <br>
           <% end %>
         <% else %>
-          <%= params[:input_text] %> has no synonyms.
+          <%= params[:input_text] %>
+          has no synonyms.
         <% end %>
       </div>
     <% end %>
@@ -60,12 +94,15 @@
     <div class="mt-4 p-4 border rounded-lg shadow bg-gray-100">
       <p class="font-bold text-lg">Tatoeba</p>
       <% result[:tatoeba]["data"].each do |phrase| %>
-        <%= phrase["text"] %> <br>
+        <%= phrase["text"] %>
+        <br>
 
         <% if phrase["translations"].present? && phrase["translations"][0].present? && phrase["translations"][0][0].present? %>
-          <%= phrase["translations"][0][0]["text"] %> <br><br>
+          <%= phrase["translations"][0][0]["text"] %>
+          <br><br>
         <% else %>
-          <em>No translation available</em> <br><br>
+          <em>No translation available</em>
+          <br><br>
         <% end %>
       <% end %>
     </div>

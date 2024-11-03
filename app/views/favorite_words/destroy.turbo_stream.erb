@@ -1,0 +1,8 @@
+<%= turbo_stream.replace "favorite_word" do %>
+  <div id="favorite_word">
+    <span style="color: gray;">&#9734;</span>
+    <%= link_to raw("&#9734;"), favorite_words_path(input_text: params[:input_text]), data: { turbo_method: :post }, id: "star_link_#{params[:input_text]}" %>
+  </div>
+<% end %>
+
+
